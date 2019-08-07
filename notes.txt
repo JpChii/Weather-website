@@ -1,0 +1,81 @@
+serving up static assets:
+core modules come before npm modules(for organizing)
+anything in public folder will be served up in express server
+app.use is a way to customize the server
+we can use express.static to point to root page
+
+Serving up dyanmic templates:
+Template engine - we are using handle bars to serve up dynamic contents
+hbs plugin integrates handle bars with express
+app.set sets the template engine for express
+express expecs all templates(views) to be in root of the project[new folder views]
+
+since we are using hbs to serve up home page index.html in public is of no use. so removing it
+res.render renders views
+    res.render('index')
+ 
+ the name should match with file in views thats all, second argument is the values passed to hbs
+  res.render('index',{
+        title: 'Weather App',
+        name: 'JpNaara'
+    })
+
+    to get the values in hbs two curly braces {{}} pass the param inside
+    <h1>{{title}}</h1>
+
+    Express by default lloks for views in views directory to customize it, we can define the path and 
+    set it using app.use
+
+Advanced Teamplating:
+Partials - to maintaina uniform header/footer throughout website
+the stuff is not completley html, it's part of website
+syntx to load partials {{>partial name}}
+
+404 page:
+* wildcard --> match anything except defined page;
+
+app.get('*', (req,res) => {
+    res.send('404 not found')
+}) this has to come at bottom, coz processing is traversed from beginning to last
+
+stying the application:
+
+margin(topandbottommargin, leftandrightmrgin)
+padding similar to android padding(topandbottommargin, leftandrightmrgin)
+border-type: width style color
+
+Images can be targeted using class for styling
+        <img class = "potrait" src = "img/120601.jpg">
+
+.potrait{
+    width: 200px;
+    height: 200px;
+}
+
+flexbox
+
+-----------------------------------------------------------------------------------------------------------------------
+
+query string:
+query string comes at end of url followed by ?
+req.query parses the query string provided in browser
+
+Broswer http requests with fetch:
+fetch is not js api its browser based 
+fetch('endpoint/hhtp request').then ((response/this is data) =>{
+    response.json().then((data) => {
+        console.log(data)
+    })
+})
+
+Creating a search form:
+adding a eventlistener to button 
+the script is copied from head to bottom of body in index.hbs to process, otherwise it'll finish befor we give any data
+e is event object in event listener
+
+to target class name use .classname
+Targetting by id starts with #
+const messageone =document.querySelector('#message1')
+
+Heroku deployment:
+
