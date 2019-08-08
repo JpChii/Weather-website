@@ -79,3 +79,7 @@ const messageone =document.querySelector('#message1')
 
 Heroku deployment:
 
+-----
+
+npm install nodemon --dev-save to install it as a dev dependency but heroku will avoid it
+
