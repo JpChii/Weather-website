@@ -6,7 +6,7 @@ body{
     padding: 0 16px;
 
     /* flexbox */
-    display: flex;
+    display: flex; 
     /* arranges element by columnwise */
     flex-direction: column;
 
