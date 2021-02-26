@@ -1,0 +1,52 @@
+pipeline {
+  agent any
+  
+  tools {dockerTool "docker"}
+  
+  stages {
+        
+    stage('Cloning Git') {
+      steps {
+        git 'https://github.com/jpbala/Weather-website.git'
+      }
+    }
+        
+    stage('Build Image') {
+      steps {
+        sh 'docker build -t weathersite .'
+      }
+    }
+
+    stage('Tag Image with registry') {
+      steps {
+        sh 'docker tag weathersite 0.0.0.0:8083/weathersite:V4'
+      }
+    }
+
+    stage('Push Image to nexus') {
+      steps {
+        sh 'docker login -u admin -p nexus 0.0.0.0:8083'
+        sh 'docker push 0.0.0.0:8083/weathersite:V4'
+      }
+    }
+    
+    stage('Clean Image') {
+        steps {
+            sh 'docker rmi -f $(docker images --filter=reference="0.0.0.0:8083/weathersite:V4" -q)'
+        }
+    }    
+     
+    stage('Run container') {
+      steps {
+         sh 'docker run --rm -d -p 3000:3000 --name weatherapp 0.0.0.0:8083/weathersite:V4'
+      }
+    }
+    
+    stage('Logout') {
+        steps {
+            sh 'docker logout 0.0.0.0:8083'
+        }
+    }
+    
+  }
+}
